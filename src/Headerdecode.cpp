@@ -38,7 +38,19 @@ headerData elfHeaderDecode(char* buffer) {
 	data.e_shnum = buffer[0x30];
 	data.e_shstrndx = buffer[0x32];
 
+	//create and populate code segment vector
+	data.segments = std::vector<codeSegment>{};
+	for (int i = 0; i < data.e_phnum; i++) {
+		//read entries of program header table
+		char* head = &buffer[data.e_phoff + i * data.e_phentsize];
+		codeSegment cur{};
+		cur.p_align = head[0x1C];
+		cur.p_filesz = head[0x10];
+		cur.p_offset = head[0x04];
+		data.segments.push_back(cur);
+	}
 	return data;
 	//NOTE: this is not exhaustive; fields that are not used in this program are not decoded by this. 
 }
+
 

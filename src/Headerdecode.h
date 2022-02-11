@@ -1,7 +1,13 @@
 #pragma once
 #include <stdio.h>
 #include <stdexcept>
+#include <vector>
 
+struct codeSegment {
+	uint32_t p_offset;
+	uint32_t p_filesz;
+	uint32_t p_align;
+};
 
 struct headerData {
 	//executable flags
@@ -21,7 +27,11 @@ struct headerData {
 	uint16_t e_shstrndx;
 
 	bool endian;
+
+	std::vector<codeSegment> segments;
 };
+
+
 
 struct headerData elfHeaderDecode(char* buffer);
 
