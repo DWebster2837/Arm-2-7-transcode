@@ -6,6 +6,7 @@
 
 
 
+
 //TODO: Verify that this code is unused before removing.
 class byteReader {
 public:
